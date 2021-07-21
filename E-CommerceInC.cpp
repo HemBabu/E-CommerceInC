@@ -40,6 +40,7 @@ void quit();
 void firstPage();
 void createCustomer();
 void loginAsCustomer();
+void addproduct();
 //bool validateuser();
 
 //main Menu
@@ -145,7 +146,7 @@ void adminmenu(){
 	printf("6) go to main page");
 	scanf("%d",&choice);
 	 if(choice==1){
-		addprod();
+		addproduct();
 	}
 	else if (choice==2){
 	editprod();	
@@ -238,13 +239,15 @@ void addproduct(){
 	printf("Manufacturing date(dd-mm-yyyy):");
     scanf("%d%d%d",&s[i].mfg.day,&s[i].mfg.month,&s[i].mfg.year);
 	}
+	printf("\nYour intended items to add  to database \n");
    printf("             *****  INVENTORY *****\n");
    printf("------------------------------------------------------------------\n");
    printf("S.N.|    NAME           |   ID  |  QUANTITY |  PRICE  |MFG.DATE\n");
    printf("------------------------------------------------------------------\n");
    for (i=0;i<n;i++)
-      printf("%d   %-15s   %-d  %-5d  %-5d %d/%d/%d\n",i+1,s[i].P_name,s[i].P_id,s[i].qty,s[i].price,s[i].mfg.day,s[i].mfg.month,s[i].mfg.year);
+      printf("%d   %15s   %d  %5d  %10.2f %d/%d/%d\n",i+1,s[i].P_name,s[i].P_id,s[i].qty,s[i].price,s[i].mfg.day,s[i].mfg.month,s[i].mfg.year);
 	printf("------------------------------------------------------------------\n");
+	
 	getch();
 	for (i=0;i<n;i++){
 fwrite(&s[i],sizeof(struct P_Detail),1,fp);
@@ -252,6 +255,10 @@ fwrite(&s[i],sizeof(struct P_Detail),1,fp);
 printf("All products has been added");
 fclose(fp);
 }
+	printf("Press any key to continue@ \n");
+		getch();
+		system("cls");
+		adminmenu();
 }
 
 
@@ -308,6 +315,10 @@ void editprod(){
 		fclose(temp);
 	}
 }
+	printf("Press any key to continue@ \n");
+		getch();
+		system("cls");
+		adminmenu();
 }
 
 
@@ -354,6 +365,10 @@ void deleteprod(){
 		
 		
 	}
+		printf("Press any key to continue@ \n");
+		getch();
+		system("cls");
+		adminmenu();
 }
 //viewing the foods in file
 void viewall(){
@@ -371,11 +386,13 @@ void viewall(){
 	else{
 	printf("             *****  INVENTORY *****\n");
    printf("------------------------------------------------------------------\n");
-   printf("S.N.|    NAME           |   ID  |  QUANTITY |  PRICE  |MFG.DATE\n");
+   printf("S.N.|    NAME          |   ID  |  QUANTITY |  PRICE  |MFG.DATE\n");
    printf("------------------------------------------------------------------\n");
    while(fread(&s,sizeof(struct P_Detail),1,fp)){
-   }
-   printf("%d   %-15s   %-d  %-5d  %-5d %d/%d/%d\n",i+1,s.P_name,s.P_id,s.qty,s.price,s.mfg.day,s.mfg.month,s.mfg.year);
+   
+   printf("%d   %10s   %10d  %10d  %5.2f %5d/%d/%d\n",i+1,s.P_name,s.P_id,s.qty,s.price,s.mfg.day,s.mfg.month,s.mfg.year);
+   i++;
+}
 	printf("------------------------------------------------------------------\n");
 		}
 		printf("Press any key to continue@ \n");
