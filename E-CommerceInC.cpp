@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include<conio.h>
 #include<string.h>
+
 //structure for details of date in product//
 struct P_Date{
         int day;
@@ -54,10 +55,95 @@ void addprod(){
 	
 }
 void createCustomer(){
-	
+	struct Bill customer;
+	fflush(stdin);
+	printf("Enter your Name ?");
+	scanf("%s",&customer.customername);
+	fflush(stdin);
+	printf("Enter your Id??");
+	scanf("&d",&customer.number);
+	fflush(stdin);
+	printf("Enter your Phone Number?");
+	scanf("%f",&customer.mobile_no);
+	fflush(stdin);
+	printf("Enter your Address?");
+	scanf("%s",&customer.street);
+	fflush(stdin);
+	printf("Enter your city?");
+	scanf("%s",&customer.city);
+	FILE *fp;
+	fp=fopen("Customer.txt","w");
+	if(fp==NULL){
+		printf("file can not be opened@@@!!!!");
+	}
+	else{
+		fwrite(&customer,sizeof(struct Bill),1,fp);
+		printf("File successfully writen !!!!");
+		fclose(fp);
+	}
+	printf("Enter any key to continue@!!!");
+	getch();
+	system("cls");
+	customermenu();
 }
 void loginAsCustomer(){
-	
+	struct Bill customer;
+	int id,count=0;
+	float pass;
+	printf("\n");
+	printf("Enter the customer Id ");
+	printf("\n");
+	scanf("%d",&id);
+	printf("ENter the password as your Phone NUmber");
+	printf("\n");
+	scanf("%f",&pass);
+	FILE *fp;
+	fp=fopen("Customer.txt","r");
+	if(fp==NULL){
+		printf("file can not be opened@@@!!!!");
+	}
+	else{
+		while(fread(&customer,sizeof(struct Bill),1,fp)){
+			printf("The data from file Are:: %d %f \n",customer.number,customer.mobile_no);
+			if(id==customer.number||pass==customer.mobile_no){
+				printf("\n");
+				printf("Customer with this id and pass is found@@@");
+				printf("\n");
+				count++;
+			}
+		}
+		if (count==0){
+			printf("\n");
+			printf("Customer with this id not found@@@");
+			printf("\n");
+			printf("Enter any key to continue@!!!");
+	getch();
+	system("cls");
+	customermenu();
+		}
+		else{
+			printf("\n");
+			printf("You are Valid member and your offer are@!!!");
+			printf("\n");
+			printf("YOu will find 10 percet discount");
+			printf("\n");
+			printf("Free delivery on online shopping");
+			printf("\n");
+			viewall();
+			
+			printf("Enter any key to continue");
+			printf("\n");
+	getch();
+	system("cls");
+	customermenu();
+		}
+		
+		fclose(fp);
+	}
+	printf("Enter any key to continue@!!!");
+	getch();
+	system("cls");
+	customermenu();
 }
 
 //first Page show Up
@@ -92,9 +178,11 @@ void customermenu(){
 	system("cls");
 	printf("\n"	);
 	printf("enter your choice?");	
+	printf("\n");
 	printf("1) Create Account \n");
 	printf("2) Login Your Account To see Offers and discount associated with your account\n");
 	printf("3) go to main page");
+	printf("\n");
 	scanf("%d",&choice);
 	if(choice==1){
 		createCustomer();
@@ -398,7 +486,7 @@ void viewall(){
 		printf("Press any key to continue@ \n");
 		getch();
 		system("cls");
-		adminmenu();
+		
 	}
 			
 void quit(){
